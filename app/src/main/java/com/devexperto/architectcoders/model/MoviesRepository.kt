@@ -9,22 +9,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MoviesRepository(application: App) {
-
+    private val regionRepository = RegionRepository(application)
     private val localDataSource = MovieLocalDataSource(application.db.movieDao())
     private val remoteDataSource = MovieRemoteDataSource(
-        application.getString(R.string.api_key),
-        regionRepository = RegionRepository(application)
+        application.getString(R.string.api_key)
     )
 
     val popularMovies = localDataSource.movies
 
     fun findById(id: Int) = localDataSource.findById(id)
 
-    suspend fun requestPopularMovies() = withContext(Dispatchers.IO) {
+    suspend fun requestPopularMovies() {
         if (localDataSource.isEmpty()) {
-            val movies = remoteDataSource.findPopularMovies()
+            val movies = remoteDataSource.findPopularMovies(regionRepository.findLastRegion())
             localDataSource.save(movies.results.toLocalModel())
         }
+    }
+
+    suspend fun switchFavorite(movie: Movie){
+        val updatedMovie = movie.copy(favorite = !movie.favorite)
+        localDataSource.save(listOf(updatedMovie))
     }
 }
 
@@ -40,5 +44,6 @@ private fun RemoteMovie.toLocalModel(): Movie = Movie(
     originalLanguage,
     originalTitle,
     popularity,
-    voteAverage
+    voteAverage,
+    false
 )

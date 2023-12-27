@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.devexperto.architectcoders.model.database.Movie"/>
+
+        <import type="com.devexperto.architectcoders.model.database.Movie" />
+
         <variable
             name="movie"
             type="Movie" />
@@ -17,17 +19,18 @@
         tools:context=".ui.detail.DetailFragment">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.DarkOverlay"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.DarkOverlay">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 app:contentScrim="?attr/colorPrimary"
-                app:statusBarScrim="?attr/colorPrimaryVariant"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="?attr/colorPrimaryVariant">
 
                 <ImageView
                     android:id="@+id/movie_detail_image"
@@ -67,22 +70,32 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="@{movie.overview}"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <com.devexperto.architectcoders.ui.detail.MovieDetailInfoView
                     android:id="@+id/movie_detail_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:lineSpacingMultiplier="1.5"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:background="?attr/colorSurface"
+                    android:lineSpacingMultiplier="1.5"
+                    android:padding="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:movie="@{movie}"
                     tools:text="Lorem ipsum" />
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/movie_detail_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="Favorite"
+            android:src="@{movie.favorite ? @drawable/ic_favorite_on : @drawable/ic_favorite_off}"
+            app:layout_anchor="@id/appBarLayout"
+            app:layout_anchorGravity="bottom|end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
