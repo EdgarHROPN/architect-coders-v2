@@ -8,11 +8,11 @@ import com.devexperto.architectcoders.model.database.Movie
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
-    movieId: Int,
-    private val repository: MoviesRepository
+    movieId: Int
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
@@ -28,7 +28,11 @@ class DetailViewModel(
 
     fun onFavoriteClicked(){
         viewModelScope.launch {
-            _state.value.movie?.let { repository.switchFavorite(it) }
+            _state.value.movie?.let { movie ->
+                val error = repository.switchFavorite(movie)
+                _state.update { it.copy(error = error) }
+            }
+
         }
     }
 

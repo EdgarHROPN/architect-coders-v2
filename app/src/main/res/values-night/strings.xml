@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Architect Coders</string>
     <string name="connectivity_error">Error de conexión\n</string>
     <string name="server_error">Error en el servidor</string>
     <string name="unknown_error">Ocurrio un error inesperado</string>

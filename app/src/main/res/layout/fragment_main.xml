@@ -13,6 +13,9 @@
         <variable
             name="movies"
             type="List&lt;Movie>" />
+        <variable
+            name="error"
+            type="String" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -52,6 +55,14 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             app:visible="@{loading}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{error}"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="?attr/colorError"/>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
